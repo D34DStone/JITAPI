@@ -139,6 +139,12 @@ class Dish(db.Model): # They form our menu
             raise err
       
 
+
+def get_date_today():
+    def wrapper():
+        return datetime.date.today().strftime("%d-%m-%Y")
+    return wrapper
+
 class Wish(db.Model): # An order of Dish from Customer
 
     id = db.Column(db.Integer, primary_key=True)
@@ -148,6 +154,7 @@ class Wish(db.Model): # An order of Dish from Customer
     phone = db.Column(db.String(2 ** 16), nullable="nophone")
     name = db.Column(db.String(2 ** 16), nullable="noname")
     coordinats = db.Column(db.String(2 ** 16), default="0.0, 0.0")
+    date = db.Column(db.String(2 ** 16), nullable=False, default=get_date_today())
 
     @classmethod
     def load(cls, wish):
@@ -161,13 +168,9 @@ class Wish(db.Model): # An order of Dish from Customer
             "address": self.address,
             "coordinats": self.coordinats,
             "name": self.name,
-            "phone": self.phone
+            "phone": self.phone,
+            "date": self.date
         }
-
-def get_date_today():
-    def wrapper():
-        return datetime.date.today().strftime("%d-%m-%Y")
-    return wrapper
 
 class Supply(db.Model):
     """
@@ -181,7 +184,7 @@ class Supply(db.Model):
     def dump(self):
         return {
             "id": self.id1,
-	    "ingredient_id": self.id,
+	        "ingredient_id": self.id,
             "mass": self.mass,
             "date": self.date
         }
