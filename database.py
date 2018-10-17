@@ -15,6 +15,11 @@ _SECRET_SIZE = 16
 
 # ====== Database functions ======= # IN DEVELOPMENT
 
+def get_date_today():
+    def wrapper():
+        return datetime.date.today().strftime("%d-%m-%Y")
+    return wrapper
+
 def td_to_str(td):
     minutes = td.seconds % 3600
     hours = int(td.seconds / 3600)
@@ -165,11 +170,6 @@ class Wish(db.Model): # An order of Dish from Customer
             "phone": self.phone,
             "date": self.date
         }
-
-def get_date_today():
-    def wrapper():
-        return datetime.date.today().strftime("%d-%m-%Y")
-    return wrapper
 
 class Supply(db.Model):
     """
